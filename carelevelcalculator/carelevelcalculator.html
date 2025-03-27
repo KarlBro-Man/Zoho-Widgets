@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequential Multi-Module Quiz with Redo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      .module {
+        margin-bottom: 40px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        display: none;
+      }
+      .module.active {
+        display: block;
+      }
+      .question {
+        margin-bottom: 20px;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        display: none;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .back-btn {
+        background-color: #2196f3;
+      }
+      .back-btn:hover {
+        background-color: #1976d2;
+      }
+      .redo-btn {
+        background-color: #ff9800;
+      }
+      .redo-btn:hover {
+        background-color: #f57c00;
+      }
+      h2 {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Multi-Module Personality Quiz</h1>
+    <form id="quizForm">
+      <!-- Module 1: Personal Preferences -->
+      <div class="module active" id="module1">
+        <h2>Module 1: Personal Preferences</h2>
+        <div class="question">
+          <h3>1. How do you prefer to spend your free time?</h3>
+          <input type="radio" name="m1q1" value="5" /> Reading books<br />
+          <input type="radio" name="m1q1" value="3" /> Watching movies<br />
+          <input type="radio" name="m1q1" value="2" /> Playing sports<br />
+          <input type="radio" name="m1q1" value="1" /> Socializing with
+          friends<br />
+        </div>
+        <div class="question">
+          <h3>2. What's your favorite type of food?</h3>
+          <input type="radio" name="m1q2" value="4" /> Italian<br />
+          <input type="radio" name="m1q2" value="3" /> Mexican<br />
+          <input type="radio" name="m1q2" value="2" /> Chinese<br />
+          <input type="radio" name="m1q2" value="1" /> Fast food<br />
+        </div>
+        <div class="question">
+          <h3>3. What's your ideal weekend?</h3>
+          <input type="radio" name="m1q3" value="5" /> Quiet relaxation<br />
+          <input type="radio" name="m1q3" value="3" /> Outdoor activities<br />
+          <input type="radio" name="m1q3" value="2" /> Cultural events<br />
+          <input type="radio" name="m1q3" value="1" /> Partying<br />
+        </div>
+        <div class="question">
+          <h3>4. Preferred music genre?</h3>
+          <input type="radio" name="m1q4" value="4" /> Classical<br />
+          <input type="radio" name="m1q4" value="3" /> Jazz<br />
+          <input type="radio" name="m1q4" value="2" /> Rock<br />
+          <input type="radio" name="m1q4" value="1" /> Pop<br />
+        </div>
+        <div class="question">
+          <h3>5. Favorite season?</h3>
+          <input type="radio" name="m1q5" value="5" /> Winter<br />
+          <input type="radio" name="m1q5" value="3" /> Spring<br />
+          <input type="radio" name="m1q5" value="2" /> Summer<br />
+          <input type="radio" name="m1q5" value="1" /> Fall<br />
+        </div>
+        <button type="button" onclick="nextModule(1)">Next: Module 2</button>
+      </div>
+
+      <!-- Module 2: Work and Productivity -->
+      <div class="module" id="module2">
+        <h2>Module 2: Work and Productivity</h2>
+        <div class="question">
+          <h3>1. Work style preference?</h3>
+          <input type="radio" name="m2q1" value="5" /> Structured planning<br />
+          <input type="radio" name="m2q1" value="3" /> Flexible approach<br />
+          <input type="radio" name="m2q1" value="2" /> Team-oriented<br />
+          <input type="radio" name="m2q1" value="1" /> Solo work<br />
+        </div>
+        <div class="question">
+          <h3>2. How do you handle deadlines?</h3>
+          <input type="radio" name="m2q2" value="4" /> Well in advance<br />
+          <input type="radio" name="m2q2" value="3" /> Steady pace<br />
+          <input type="radio" name="m2q2" value="2" /> Last minute push<br />
+          <input type="radio" name="m2q2" value="1" /> Often late<br />
+        </div>
+        <div class="question">
+          <h3>3. Preferred work environment?</h3>
+          <input type="radio" name="m2q3" value="5" /> Quiet office<br />
+          <input type="radio" name="m2q3" value="3" /> Open space<br />
+          <input type="radio" name="m2q3" value="2" /> Remote<br />
+          <input type="radio" name="m2q3" value="1" /> Coffee shop<br />
+        </div>
+        <div class="question">
+          <h3>4. Problem-solving style?</h3>
+          <input type="radio" name="m2q4" value="4" /> Analytical<br />
+          <input type="radio" name="m2q4" value="3" /> Creative<br />
+          <input type="radio" name="m2q4" value="2" /> Collaborative<br />
+          <input type="radio" name="m2q4" value="1" /> Intuitive<br />
+        </div>
+        <div class="question">
+          <h3>5. Meeting preference?</h3>
+          <input type="radio" name="m2q5" value="5" /> Scheduled<br />
+          <input type="radio" name="m2q5" value="3" /> As needed<br />
+          <input type="radio" name="m2q5" value="2" /> Brief stand-ups<br />
+          <input type="radio" name="m2q5" value="1" /> Avoid them<br />
+        </div>
+        <button type="button" class="back-btn" onclick="prevModule(2)">
+          Back: Module 1
+        </button>
+        <button type="button" onclick="nextModule(2)">Next: Module 3</button>
+      </div>
+
+      <!-- Module 3: Social and Leisure -->
+      <div class="module" id="module3">
+        <h2>Module 3: Social and Leisure</h2>
+        <div class="question">
+          <h3>1. Vacation preference?</h3>
+          <input type="radio" name="m3q1" value="5" /> Cultural immersion<br />
+          <input type="radio" name="m3q1" value="3" /> Beach relaxation<br />
+          <input type="radio" name="m3q1" value="2" /> Adventure travel<br />
+          <input type="radio" name="m3q1" value="1" /> Staycation<br />
+        </div>
+        <div class="question">
+          <h3>2. Social gathering size?</h3>
+          <input type="radio" name="m3q2" value="4" /> Small group<br />
+          <input type="radio" name="m3q2" value="3" /> Medium party<br />
+          <input type="radio" name="m3q2" value="2" /> Large event<br />
+          <input type="radio" name="m3q2" value="1" /> One-on-one<br />
+        </div>
+        <div class="question">
+          <h3>3. Stress relief method?</h3>
+          <input type="radio" name="m3q3" value="5" /> Meditation<br />
+          <input type="radio" name="m3q3" value="3" /> Exercise<br />
+          <input type="radio" name="m3q3" value="2" /> Socializing<br />
+          <input type="radio" name="m3q3" value="1" /> Gaming<br />
+        </div>
+        <div class="question">
+          <h3>4. Learning preference?</h3>
+          <input type="radio" name="m3q4" value="4" /> Books<br />
+          <input type="radio" name="m3q4" value="3" /> Videos<br />
+          <input type="radio" name="m3q4" value="2" /> Hands-on<br />
+          <input type="radio" name="m3q4" value="1" /> Discussions<br />
+        </div>
+        <div class="question">
+          <h3>5. Evening activity?</h3>
+          <input type="radio" name="m3q5" value="5" /> Reading<br />
+          <input type="radio" name="m3q5" value="3" /> TV/Movies<br />
+          <input type="radio" name="m3q5" value="2" /> Hobbies<br />
+          <input type="radio" name="m3q5" value="1" /> Going out<br />
+        </div>
+        <button type="button" class="back-btn" onclick="prevModule(3)">
+          Back: Module 2
+        </button>
+        <button type="button" onclick="calculateScore()">Submit Quiz</button>
+      </div>
+    </form>
+
+    <div id="result" class="result">
+      <h2>Quiz Results</h2>
+      <p>Module 1 Score: <span id="m1Score">0</span>/25</p>
+      <p>Module 2 Score: <span id="m2Score">0</span>/25</p>
+      <p>Module 3 Score: <span id="m3Score">0</span>/25</p>
+      <h3>Total Score: <span id="totalScore">0</span>/75</h3>
+      <p id="interpretation"></p>
+      <button type="button" class="redo-btn" onclick="redoQuiz()">
+        Redo Quiz
+      </button>
+    </div>
+
+    <script>
+      function nextModule(currentModule) {
+        const form = document.getElementById("quizForm");
+        let questionsAnswered = 0;
+
+        // Check if all questions in current module are answered
+        for (let q = 1; q <= 5; q++) {
+          const selected = form.querySelector(
+            `input[name="m${currentModule}q${q}"]:checked`
+          );
+          if (selected) {
+            questionsAnswered++;
+          }
+        }
+
+        if (questionsAnswered === 5) {
+          // Hide current module and show next
+          document
+            .getElementById(`module${currentModule}`)
+            .classList.remove("active");
+          document
+            .getElementById(`module${currentModule + 1}`)
+            .classList.add("active");
+        } else {
+          alert(
+            `Please answer all questions in Module ${currentModule} before proceeding!`
+          );
+        }
+      }
+
+      function prevModule(currentModule) {
+        // Hide current module and show previous
+        document
+          .getElementById(`module${currentModule}`)
+          .classList.remove("active");
+        document
+          .getElementById(`module${currentModule - 1}`)
+          .classList.add("active");
+      }
+
+      function calculateScore() {
+        const form = document.getElementById("quizForm");
+        let scores = { m1: 0, m2: 0, m3: 0 };
+        let questionsAnswered = 0;
+
+        // Check Module 3 answers
+        for (let q = 1; q <= 5; q++) {
+          const selected = form.querySelector(`input[name="m3q${q}"]:checked`);
+          if (selected) {
+            scores.m3 += parseInt(selected.value);
+            questionsAnswered++;
+          }
+        }
+
+        // Calculate scores for all modules if Module 3 is complete
+        if (questionsAnswered === 5) {
+          for (let module = 1; module <= 2; module++) {
+            for (let q = 1; q <= 5; q++) {
+              const selected = form.querySelector(
+                `input[name="m${module}q${q}"]:checked`
+              );
+              if (selected) {
+                scores[`m${module}`] += parseInt(selected.value);
+              }
+            }
+          }
+
+          const resultDiv = document.getElementById("result");
+          const totalScore = scores.m1 + scores.m2 + scores.m3;
+
+          // Update scores
+          document.getElementById("m1Score").textContent = scores.m1;
+          document.getElementById("m2Score").textContent = scores.m2;
+          document.getElementById("m3Score").textContent = scores.m3;
+          document.getElementById("totalScore").textContent = totalScore;
+
+          // Interpretation
+          let interpretation = "";
+          if (totalScore >= 60) {
+            interpretation =
+              "You have refined and thoughtful preferences across all aspects!";
+          } else if (totalScore >= 45) {
+            interpretation =
+              "You maintain a balanced approach to life and work!";
+          } else if (totalScore >= 30) {
+            interpretation =
+              "You enjoy variety and flexibility in your choices!";
+          } else {
+            interpretation = "You embrace a casual and energetic lifestyle!";
+          }
+          document.getElementById("interpretation").textContent =
+            interpretation;
+
+          // Hide Module 3 and show results
+          document.getElementById("module3").classList.remove("active");
+          resultDiv.style.display = "block";
+        } else {
+          alert("Please answer all questions in Module 3 before submitting!");
+        }
+      }
+
+      function redoQuiz() {
+        const form = document.getElementById("quizForm");
+        const resultDiv = document.getElementById("result");
+
+        // Reset all radio buttons
+        const radios = form.querySelectorAll('input[type="radio"]');
+        radios.forEach((radio) => (radio.checked = false));
+
+        // Hide results and show Module 1
+        resultDiv.style.display = "none";
+        document.getElementById("module1").classList.add("active");
+
+        // Reset displayed scores
+        document.getElementById("m1Score").textContent = "0";
+        document.getElementById("m2Score").textContent = "0";
+        document.getElementById("m3Score").textContent = "0";
+        document.getElementById("totalScore").textContent = "0";
+        document.getElementById("interpretation").textContent = "";
+      }
+    </script>
+  </body>
+</html>
